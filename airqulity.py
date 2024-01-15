@@ -3,6 +3,7 @@ from airflow.decorators import task
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.models import Variable
 from datetime import datetime, timedelta
+from plugins import slack
 import requests
 import logging
 
@@ -13,6 +14,7 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
     'catchup': False,
+    'on_failure_callback': slack.on_failure_callback
 }
 
 # DAG 정의
